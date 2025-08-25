@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import Image from "next/image"; // ✅ Next.js Image optimization
+import Image from "next/image";
 import emailjs from "@emailjs/browser";
 
 export default function Home() {
@@ -47,7 +47,7 @@ export default function Home() {
     }
   };
 
-  // --- Car galleries ---
+  // --- Car images ---
   const hyundaiImages = Array.from(
     { length: 6 },
     (_, i) => `/Cars/Hyundai i30/${i + 1}.jpg`
@@ -84,7 +84,7 @@ export default function Home() {
 
   return (
     <main className="bg-gray-50 text-gray-900">
-      {/* Hero Section */}
+      {/* Hero */}
       <section className="h-screen flex flex-col justify-center items-center text-center bg-white p-6">
         <Image
           src="/logo.png"
@@ -105,116 +105,148 @@ export default function Home() {
         </a>
       </section>
 
-      {/* Services Section */}
-      <section id="services" className="py-20 text-center">
+      {/* Services */}
+      <section id="services" className="py-16 bg-gray-100 text-center">
         <h2 className="text-3xl font-bold mb-10">Our Services</h2>
-        <div className="grid md:grid-cols-3 gap-8 px-6 max-w-6xl mx-auto">
-          <div className="bg-white p-6 rounded-2xl shadow-lg">
-            <h3 className="text-xl font-semibold mb-4">Interior Detail</h3>
-            <p className="mb-4">
-              Deep-clean carpets, seats, dashboard & vents.
+        <div className="grid md:grid-cols-3 gap-8 px-6">
+          <div className="p-6 bg-white rounded-2xl shadow-lg">
+            <h3 className="font-semibold text-xl mb-4">Interior Detail</h3>
+            <p className="text-gray-700 mb-4">
+              Deep cleaning of carpets, seats, dashboard, vents, and leather treatment.
             </p>
-            <p className="font-bold">$150</p>
+            <p className="font-bold">$199</p>
           </div>
-          <div className="bg-white p-6 rounded-2xl shadow-lg">
-            <h3 className="text-xl font-semibold mb-4">Exterior Detail</h3>
-            <p className="mb-4">
-              Hand wash, wax, wheels & paint protection.
+          <div className="p-6 bg-white rounded-2xl shadow-lg">
+            <h3 className="font-semibold text-xl mb-4">Exterior Detail</h3>
+            <p className="text-gray-700 mb-4">
+              Full wash, clay bar, polish, and protective wax for a lasting shine.
             </p>
-            <p className="font-bold">$120</p>
+            <p className="font-bold">$249</p>
           </div>
-          <div className="bg-white p-6 rounded-2xl shadow-lg">
-            <h3 className="text-xl font-semibold mb-4">Full Detail</h3>
-            <p className="mb-4">
-              Complete inside & out detail for showroom shine.
+          <div className="p-6 bg-white rounded-2xl shadow-lg">
+            <h3 className="font-semibold text-xl mb-4">Full Package</h3>
+            <p className="text-gray-700 mb-4">
+              Complete interior + exterior detailing for the ultimate refresh.
             </p>
-            <p className="font-bold">$250</p>
+            <p className="font-bold">$399</p>
           </div>
         </div>
       </section>
 
-      {/* Gallery Section */}
-      <section id="gallery" className="py-20 bg-gray-100 text-center">
-        <h2 className="text-3xl font-bold mb-10">Recent Work</h2>
-        <div className="grid md:grid-cols-3 gap-8 px-6 max-w-6xl mx-auto">
-          <img src={hyundaiImages[hyundai.index]} alt="Hyundai" className="rounded-2xl shadow-lg" />
-          <img src={mitsubishiImages[mitsubishi.index]} alt="Mitsubishi" className="rounded-2xl shadow-lg" />
-          <img src={tritonImages[triton.index]} alt="Triton" className="rounded-2xl shadow-lg" />
+      {/* Gallery */}
+      <section id="gallery" className="py-16 text-center bg-white">
+        <h2 className="text-3xl font-bold mb-10">Our Work</h2>
+        <div className="grid md:grid-cols-3 gap-8 px-6">
+          {[{ title: "Hyundai i30", data: hyundai },
+            { title: "Mitsubishi Outlander", data: mitsubishi },
+            { title: "Triton GS", data: triton }
+          ].map((car, idx) => (
+            <div key={idx} className="bg-gray-100 p-4 rounded-2xl shadow-lg">
+              <h3 className="mb-4 font-semibold">{car.title}</h3>
+              <Image
+                src={
+                  car.title === "Hyundai i30"
+                    ? hyundaiImages[car.data.index]
+                    : car.title === "Mitsubishi Outlander"
+                    ? mitsubishiImages[car.data.index]
+                    : tritonImages[car.data.index]
+                }
+                alt={car.title}
+                width={400}
+                height={300}
+                className="rounded-xl mx-auto"
+              />
+              <div className="flex justify-center mt-4 gap-4">
+                <button
+                  onClick={car.data.prev}
+                  className="px-4 py-2 bg-gray-300 rounded-lg"
+                >
+                  ◀
+                </button>
+                <button
+                  onClick={car.data.next}
+                  className="px-4 py-2 bg-gray-300 rounded-lg"
+                >
+                  ▶
+                </button>
+              </div>
+            </div>
+          ))}
         </div>
       </section>
 
-      {/* About Section */}
-      <section id="about" className="py-20 px-6 max-w-4xl mx-auto text-center">
+      {/* About */}
+      <section id="about" className="py-16 bg-gray-100 text-center px-6">
         <h2 className="text-3xl font-bold mb-6">About Us</h2>
-        <p>
-          At EA Detailing, we take pride in delivering premium car detailing
-          services directly to your doorstep. Our mission is to restore your
-          vehicle’s beauty while saving you time and hassle.
+        <p className="max-w-2xl mx-auto text-gray-700">
+          EA Detailing is a premium mobile detailing service bringing showroom shine to your doorstep.  
+          With years of experience and passion for perfection, we care for your car as if it were our own.
         </p>
       </section>
 
-      {/* Contact Section */}
-      <section id="contact" className="py-20 px-6 max-w-4xl mx-auto">
-        <h2 className="text-3xl font-bold mb-6 text-center">Book a Service</h2>
+      {/* Contact */}
+      <section id="contact" className="py-16 bg-white text-center px-6">
+        <h2 className="text-3xl font-bold mb-6">Book Your Appointment</h2>
         {submitted ? (
-          <p className="text-green-600 text-center">
-            Thank you! Your booking has been received.
-          </p>
+          <p className="text-green-600 font-semibold">Thank you! Your booking request has been sent.</p>
         ) : (
-          <form onSubmit={handleSubmit} className="grid gap-4 bg-white p-6 rounded-2xl shadow-lg">
+          <form
+            onSubmit={handleSubmit}
+            className="max-w-xl mx-auto bg-gray-100 p-6 rounded-2xl shadow-lg space-y-4"
+          >
             <input
               type="text"
               name="name"
               placeholder="Your Name"
               onChange={handleChange}
+              className="w-full p-3 rounded-lg"
               required
-              className="p-3 border rounded-lg"
             />
             <input
               type="email"
               name="email"
               placeholder="Your Email"
               onChange={handleChange}
+              className="w-full p-3 rounded-lg"
               required
-              className="p-3 border rounded-lg"
             />
             <input
               type="tel"
               name="phone"
-              placeholder="Phone Number"
+              placeholder="Your Phone"
               onChange={handleChange}
+              className="w-full p-3 rounded-lg"
               required
-              className="p-3 border rounded-lg"
             />
             <select
               name="service"
               onChange={handleChange}
+              className="w-full p-3 rounded-lg"
               required
-              className="p-3 border rounded-lg"
             >
-              <option value="">Select a Service</option>
-              <option value="Interior">Interior Detail</option>
-              <option value="Exterior">Exterior Detail</option>
-              <option value="Full">Full Detail</option>
+              <option value="">Select Service</option>
+              <option value="Interior Detail">Interior Detail</option>
+              <option value="Exterior Detail">Exterior Detail</option>
+              <option value="Full Package">Full Package</option>
             </select>
             <input
               type="text"
               name="car"
-              placeholder="Car Model"
+              placeholder="Car Make & Model"
               onChange={handleChange}
+              className="w-full p-3 rounded-lg"
               required
-              className="p-3 border rounded-lg"
             />
             <input
               type="date"
               name="date"
               onChange={handleChange}
+              className="w-full p-3 rounded-lg"
               required
-              className="p-3 border rounded-lg"
             />
             <button
               type="submit"
-              className="bg-blue-600 text-white py-3 rounded-lg font-semibold hover:scale-105 transition"
+              className="bg-blue-600 text-white px-6 py-3 rounded-2xl font-semibold shadow-lg hover:scale-105 transition"
             >
               Submit
             </button>
@@ -222,27 +254,28 @@ export default function Home() {
         )}
       </section>
 
-      {/* FAQ Section */}
-      <section id="faq" className="py-20 px-6 max-w-4xl mx-auto">
-        <h2 className="text-3xl font-bold mb-6 text-center">FAQ</h2>
-        <div className="space-y-6">
-          <div>
-            <h3 className="font-semibold">How long does a detail take?</h3>
-            <p>Most details take between 2–4 hours depending on the service.</p>
-          </div>
-          <div>
-            <h3 className="font-semibold">Do you come to my location?</h3>
-            <p>
-              Yes! We are a fully mobile service and come to your home or
-              workplace.
-            </p>
-          </div>
+      {/* FAQ */}
+      <section id="faq" className="py-16 bg-gray-100 text-center px-6">
+        <h2 className="text-3xl font-bold mb-6">Frequently Asked Questions</h2>
+        <div className="max-w-2xl mx-auto text-left space-y-4">
+          <details className="p-4 bg-white rounded-xl shadow">
+            <summary className="font-semibold">How long does a detail take?</summary>
+            <p className="mt-2 text-gray-600">Typically 3–5 hours depending on the service and vehicle size.</p>
+          </details>
+          <details className="p-4 bg-white rounded-xl shadow">
+            <summary className="font-semibold">Do you come to me?</summary>
+            <p className="mt-2 text-gray-600">Yes! We are a mobile service and bring everything needed.</p>
+          </details>
+          <details className="p-4 bg-white rounded-xl shadow">
+            <summary className="font-semibold">What payment methods do you accept?</summary>
+            <p className="mt-2 text-gray-600">We accept cash, card, and bank transfer.</p>
+          </details>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="bg-gray-900 text-white py-6 text-center">
-        <p>© {new Date().getFullYear()} EA Detailing. All rights reserved.</p>
+      <footer className="py-6 bg-gray-900 text-white text-center">
+        <p>&copy; {new Date().getFullYear()} EA Detailing. All rights reserved.</p>
       </footer>
     </main>
   );
